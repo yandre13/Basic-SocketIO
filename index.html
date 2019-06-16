@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Connection counter with socketIO</title>
+</head>
+<body>
+ <h1>Connection counter with socketIO :)</h1>
+ <h2 id="hello"></h2>
+ <p>Number of active connections
+  <b id="connections"></b>
+ </p>
+ <script src="./socket.io/socket.io.js"></script>
+ <script>
+ ;
+ ((d,c,io)=>{
+  //io is an object io
+  io.on('hello', data=>{
+  c(data)
+  d.getElementById('hello').textContent = data.message
+  io.emit('FromClient', {name:'Yandre', ig:'yandreelsf'})
+  })
+ })(document, console.log, io())
+
+ ;
+ </script>
+</body>
+</html>
