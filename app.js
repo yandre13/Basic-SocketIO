@@ -12,6 +12,7 @@ const c = console.log,
  //socketIO server requires a server htpp
  io = require('socket.io')(http)
 
+ let connections=0
 
  //interesting
  function server(req, res){
@@ -32,5 +33,17 @@ const c = console.log,
  io.on('connection', socket=>{
   //Events: socket is an object io
   socket.emit('hello', {message:'Hello world with SocketIO'})
+  //Show data from client
   socket.on('FromClient', data=>c(data))
+  connections++
+  c(`Active connections: ${connections}`)
+  //Show active connectioms
+  socket.emit('connected users', {connections})
+  socket.broadcast.emit('connected users', {connections})
+  //Disconnect
+  socket.on('disconnect', ()=>{
+   connections--
+   socket.broadcast.emit('connected users', {connections})
+   c(`Active connections: ${connections}`)
+  })
  })

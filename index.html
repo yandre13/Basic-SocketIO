@@ -4,7 +4,7 @@
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <meta http-equiv="X-UA-Compatible" content="ie=edge">
- <title>Connection counter with socketIO</title>
+ <title>Connections counter with socketIO</title>
 </head>
 <body>
  <h1>Connection counter with socketIO :)</h1>
@@ -17,10 +17,17 @@
  ;
  ((d,c,io)=>{
   //io is an object io
+  //Listening to event hello
   io.on('hello', data=>{
   c(data)
   d.getElementById('hello').textContent = data.message
+  //Emit an event to server
   io.emit('FromClient', {name:'Yandre', ig:'yandreelsf'})
+  })
+  //Listening to event connected users
+  io.on('connected users', data=>{
+   c(`Updating from server. There's ${data.connections} active connections`)
+   d.getElementById('connections').textContent = data.connections
   })
  })(document, console.log, io())
 
